@@ -1,7 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-
+import 'src/common/services/api_service.dart';
+import 'src/common/services/session_manager.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -61,11 +62,14 @@ class MyApp extends StatelessWidget {
 class RegistrationForm extends StatefulWidget {
   const RegistrationForm({super.key});
 
+
   @override
   _RegistrationFormState createState() => _RegistrationFormState();
 }
 
 class _RegistrationFormState extends State<RegistrationForm> {
+  final apiService = ApiService('https://elevate-apis.shikshalokam.org/');
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController _fullNameController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
@@ -104,15 +108,35 @@ class _RegistrationFormState extends State<RegistrationForm> {
               Align(
                 alignment: Alignment.centerRight,
                 child: ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
+                  onPressed: () async{
+                    // if (_formKey.currentState!.validate()) {
                       // Perform registration logic here
                       // You can access the form field values using:
                       // _fullNameController.text
                       // _emailController.text
                       // _passwordController.text
                       // _confirmPasswordController.text
+                    // }
+                    try {
+                      // final response = await  apiService.post('user/v1/account/login', {
+                      //   "email": "user@email.com",
+                      //   "password": "user@password"
+                      // });
+                      // print('GET Response: $response');
+
+                     // await SessionManager.saveAccessToken({'name': 'kiran'});
+                      final tokens = await SessionManager.getAccessToken();
+                      print(tokens);
+
+
+                      // Make other API calls as needed (post, patch, delete)
+                    } catch (e) {
+                      print('Error: $e');
                     }
+                    // apiService.post('user/v1/account/login', {
+                    //   "email": "Prod02@yopmail.com",
+                    //   "password": "Okok@123"
+                    // });
                   },
                   style: ButtonStyle(
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
