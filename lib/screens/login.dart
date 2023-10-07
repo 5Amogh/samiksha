@@ -44,7 +44,6 @@ class _LoginPageState extends State<LoginPage> {
                   ],
                 ),
               ),
-              // SizedBox(height: 160.0),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
