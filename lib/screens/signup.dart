@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import '../src/common/widgets/forms/text_input_card.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -11,26 +12,28 @@ class SignupPage extends StatefulWidget {
 class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: const SafeArea(
-        child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.only(left: 20.0, top: 20.0),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'Create Account',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 25.0,
-                      fontWeight: FontWeight.bold),
+    return Scaffold(
+      body: Container(
+        color: Colors.white,
+        child: const SafeArea(
+          child: Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.only(left: 20.0, top: 20.0),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Create Account',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 25.0,
+                        fontWeight: FontWeight.bold),
+                  ),
                 ),
               ),
-            ),
-            RegistrationForm()
-          ],
+              RegistrationForm()
+            ],
+          ),
         ),
       ),
     );
@@ -68,29 +71,28 @@ class _RegistrationFormState extends State<RegistrationForm> {
         key: _formKey,
         child: Column(
           children: [
-            FormFieldCard(
+            TextInputCard(
               labelText: 'Full Name',
               prefixIcon: Icon(Icons.person),
               controller: _fullNameController,
             ),
             const SizedBox(height: 20.0),
-             FormFieldCard(
+            TextInputCard(
               labelText: 'Email',
               prefixIcon: Icon(Icons.email),
               controller: _emailController,
             ),
             const SizedBox(height: 20.0),
-             FormFieldCard(
+            TextInputCard(
               labelText: 'Password',
               prefixIcon: Icon(Icons.lock),
-               controller: _passwordController,
-
+              controller: _passwordController,
             ),
             const SizedBox(height: 20.0),
-             FormFieldCard(
+            TextInputCard(
               labelText: 'Confirm Password',
               prefixIcon: Icon(Icons.lock),
-               controller: _confirmPasswordController,
+              controller: _confirmPasswordController,
             ),
             const SizedBox(height: 40.0),
             Align(
@@ -141,7 +143,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                       style: const TextStyle(color: Colors.orange),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
-                          print('Sign in clicked');
+                          Navigator.pushNamed(context, '/login');
                         },
                     )
                   ])),
@@ -152,45 +154,3 @@ class _RegistrationFormState extends State<RegistrationForm> {
     );
   }
 }
-
-class FormFieldCard extends StatefulWidget {
-  final String labelText;
-  final Icon prefixIcon;
-  final TextEditingController controller;
-
-  const FormFieldCard({
-    Key? key,
-    required this.labelText,
-    required this.prefixIcon,
-    required this.controller,
-  }) : super(key: key);
-
-  @override
-  _FormFieldCardState createState() => _FormFieldCardState();
-}
-
-class _FormFieldCardState extends State<FormFieldCard> {
-  bool isFocused = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return Focus(
-      onFocusChange: (hasFocus) {
-        setState(() {
-          isFocused = hasFocus;
-        });
-      },
-      child: Card(
-        elevation: isFocused ? 8.0 : 0.0,
-        child: TextFormField(
-          controller: widget.controller,
-          decoration: InputDecoration(
-            labelText: widget.labelText,
-            prefixIcon: widget.prefixIcon
-          ),
-        ),
-      ),
-    );
-  }
-}
-
