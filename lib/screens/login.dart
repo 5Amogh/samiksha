@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:samiksha/src/common/services/auth_service.dart';
 import '../src/common/widgets/buttons/primary_button.dart';
 import '../src/common/widgets/forms/text_input_card.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+
+  final AuthService authService;
+
+   const LoginPage({Key? key, required this.authService}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -19,12 +23,12 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Expanded(
+               Expanded(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Login',
                       style: TextStyle(
                         fontSize: 36,
@@ -32,7 +36,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     SizedBox(height: 10.0),
-                    Text(
+                   const  Text(
                       'Please sign in to continue.',
                       style: TextStyle(
                         fontSize: 16,
@@ -40,7 +44,7 @@ class _LoginPageState extends State<LoginPage> {
                         color: Colors.grey,
                       ),
                     ),
-                    LoginForm(),
+                    LoginForm(authService: widget.authService),
                   ],
                 ),
               ),
@@ -75,7 +79,9 @@ class _LoginPageState extends State<LoginPage> {
 }
 
 class LoginForm extends StatefulWidget {
-  const LoginForm({Key? key});
+  final AuthService authService; // Define the authService parameter
+
+   LoginForm({Key? key, required this.authService}) : super(key: key);
 
   @override
   _LoginFormState createState() => _LoginFormState();
@@ -89,8 +95,15 @@ class _LoginFormState extends State<LoginForm> {
   final FocusNode _emailFocusNode = FocusNode();
   final FocusNode _passwordFocusNode = FocusNode();
 
-  login() {
+  login() async {
     debugPrint('Redirect to homepage');
+    try {
+      Map<String, dynamic> response = await widget.authService.login(_emailController.text, _passwordController.text);
+      print(response);
+    } catch (error) {
+      print (error);
+    }
+
   }
 
   @override
