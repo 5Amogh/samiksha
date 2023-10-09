@@ -1,9 +1,13 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:samiksha/src/common/services/auth_service.dart';
 import '../src/common/widgets/forms/text_input_card.dart';
+import 'package:samiksha/src/common/services/api_service.dart';
 
 class SignupPage extends StatefulWidget {
-  const SignupPage({super.key});
+  final AuthService authService;
+
+  const SignupPage({super.key, required this.authService});
 
   @override
   State<SignupPage> createState() => _SignupPageState();
@@ -73,25 +77,25 @@ class _RegistrationFormState extends State<RegistrationForm> {
           children: [
             TextInputCard(
               labelText: 'Full Name',
-              prefixIcon: Icon(Icons.person),
+              prefixIcon: const Icon(Icons.person),
               controller: _fullNameController,
             ),
             const SizedBox(height: 20.0),
             TextInputCard(
               labelText: 'Email',
-              prefixIcon: Icon(Icons.email),
+              prefixIcon: const Icon(Icons.email),
               controller: _emailController,
             ),
             const SizedBox(height: 20.0),
             TextInputCard(
               labelText: 'Password',
-              prefixIcon: Icon(Icons.lock),
+              prefixIcon: const Icon(Icons.lock),
               controller: _passwordController,
             ),
             const SizedBox(height: 20.0),
             TextInputCard(
               labelText: 'Confirm Password',
-              prefixIcon: Icon(Icons.lock),
+              prefixIcon: const Icon(Icons.lock),
               controller: _confirmPasswordController,
             ),
             const SizedBox(height: 40.0),

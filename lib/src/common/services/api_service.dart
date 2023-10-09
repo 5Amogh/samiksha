@@ -2,18 +2,31 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class ApiService {
-  final  String baseUrl;
+  final String baseUrl;
   final String? accessToken;
+  static ApiService? _instance;
+
   // final Object? headers;
 
-  ApiService( this.baseUrl, {this.accessToken});
+  // ApiService( this.baseUrl, {this.accessToken});
+
+  factory ApiService(String baseUrl) {
+    _instance ??= ApiService._internal(baseUrl);
+    return _instance!;
+  }
+
+  ApiService._internal(this.baseUrl, {this.accessToken});
 
   Future<Map<String, dynamic>> _handleResponse(http.Response response) async {
     final Map<String, dynamic> responseData = json.decode(response.body);
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
+      print("success");
+      print(response);
       return responseData;
     } else {
+      print("error");
+      print(responseData);
       throw Exception(responseData['message'] ?? 'Something went wrong');
     }
   }

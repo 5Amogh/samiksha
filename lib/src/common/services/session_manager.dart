@@ -22,6 +22,16 @@ class SessionManager {
     await prefs.clear();
   }
 
+  static Future<void> saveRefreshToken(String token) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_refreshTokenKey, token.toString() );
+  }
+
+  static Future<String?> getRefreshToken() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString(_refreshTokenKey);
+  }
+
   static Future<bool> isLoggedIn() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? accessToken = prefs.getString(_accessTokenKey);
